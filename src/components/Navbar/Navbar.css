@@ -65,7 +65,6 @@
   transition: all 0.2s ease-out;
 }
 
-/* Logout button style */
 .nav-links button {
   background: none;
   border: none;
@@ -73,11 +72,11 @@
   font-size: 1.2rem;
   cursor: pointer;
   padding: 0.5rem 1rem;
+  transition: color 0.2s ease-out;
 }
 
 .nav-links button:hover {
   border-bottom: 4px solid #fff;
-  transition: all 0.2s ease-out;
 }
 
 .fa-bars {
@@ -169,7 +168,6 @@
     transition: 250ms;
   }
 
-  /* Logout button mobile style */
   .nav-links button {
     width: 100%;
     text-align: center;
