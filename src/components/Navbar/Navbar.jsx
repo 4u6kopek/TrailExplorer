@@ -74,7 +74,6 @@ function Navbar() {
               Adventures
             </Link>
           </li>
-          {/* Show Register and Login links if user is not logged in */}
           {!user && (
             <>
               <li className="nav-item">
@@ -88,7 +87,6 @@ function Navbar() {
               </li>
             </>
           )}
-          {/* Show Logout button if user is logged in */}
           {user && (
             <li className="nav-item">
               <button className="nav-links" onClick={handleLogout}>
@@ -97,11 +95,10 @@ function Navbar() {
             </li>
           )}
         </ul>
-        {/* Show Register button if user is not logged in */}
         {!user && button && (
-          <Link to="/register">
-            <Button buttonStyle="btn--outline">REGISTER</Button>
-          </Link>
+          <Button to="/register" buttonStyle="btn--outline">
+            REGISTER
+          </Button>
         )}
       </div>
     </nav>

@@ -11,23 +11,24 @@ const Button = ({
   onClick,
   buttonStyle = STYLES[0],
   buttonSize = SIZES[0],
-  to = "/register",
+  to,
 }) => {
   const checkButtonStyle = STYLES.includes(buttonStyle)
     ? buttonStyle
     : STYLES[0];
   const checkButtonSize = SIZES.includes(buttonSize) ? buttonSize : SIZES[0];
 
+  const Component = to ? Link : "button";
+
   return (
-    <Link to={to}>
-      <button
-        className={`btn ${checkButtonStyle} ${checkButtonSize}`}
-        onClick={onClick}
-        type={type}
-      >
-        {children}
-      </button>
-    </Link>
+    <Component
+      to={to}
+      className={`btn ${checkButtonStyle} ${checkButtonSize}`}
+      onClick={onClick}
+      type={!to ? type : undefined}
+    >
+      {children}
+    </Component>
   );
 };
 
