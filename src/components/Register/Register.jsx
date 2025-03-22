@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./Register.css";
 import { auth } from "../../services/firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 function Register() {
   const [name, setName] = useState("");
@@ -89,7 +89,7 @@ function Register() {
           <button type="submit">Register</button>
         </form>
         <p className="login-link">
-          Already have an account? <a href="/login">Login here</a>.
+          Already have an account? <Link to="/login">Login here</Link>.
         </p>
       </div>
     </div>
