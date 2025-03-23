@@ -7,8 +7,7 @@
 
 .home,
 .services,
-.products,
-.sign-up {
+.products {
   display: flex;
   height: 90vh;
   align-items: center;
@@ -17,8 +16,7 @@
 }
 
 .services,
-.products,
-.sign-up {
+.products {
   background-position: center;
   background-repeat: no-repeat;
   color: #fff;
@@ -35,7 +33,13 @@
   background-size: cover;
 }
 
-.sign-up {
-  background-image: url('/images/img-8.jpg');
-  background-size: cover;
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
