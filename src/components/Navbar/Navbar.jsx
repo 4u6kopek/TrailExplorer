@@ -85,6 +85,15 @@ function Navbar() {
                   Login
                 </Link>
               </li>
+              <li className="nav-item">
+                <Link
+                  to="/register"
+                  className="nav-links-mobile"
+                  onClick={closeMobileMenu}
+                >
+                  Register
+                </Link>
+              </li>
             </>
           )}
           {user && (
