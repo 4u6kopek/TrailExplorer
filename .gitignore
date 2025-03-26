@@ -62,3 +62,4 @@ coverage/
 
 # Firebase emulator data
 .firebase-emulators/
+.vercel
