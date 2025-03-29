@@ -16,7 +16,7 @@ app.use(cors({
     "https://trailexplorer-2a121.firebaseapp.com",
     "http://localhost:5173"
   ],
-  methods: ["GET", "POST", "DELETE"],
+  methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
 }));
 
@@ -48,8 +48,8 @@ const Trail = mongoose.model("Trail", trailSchema);
 // Routes
 
 app.get("/api/health", (req, res) => {
-  res.json({ 
-    status: "OK", 
+  res.json({
+    status: "OK",
     db: mongoose.connection.readyState === 1 ? "Connected" : "Disconnected",
     version: "1.0.1"
   });
