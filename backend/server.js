@@ -8,8 +8,8 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+// Middleware
 app.use(express.json());
-
 app.use(cors({
   origin: [
     "https://trailexplorer-2a121.web.app",
@@ -20,6 +20,7 @@ app.use(cors({
   credentials: true
 }));
 
+// Database Connection
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("Connected to MongoDB Atlas"))
   .catch((err) => console.error("MongoDB connection error:", err));
@@ -45,14 +46,13 @@ const trailSchema = new mongoose.Schema({
 const Trail = mongoose.model("Trail", trailSchema);
 
 // Routes
-app.get("/", (req, res) => {
-  res.send("Welcome to the TrailExplorer API!");
-});
-
-// Test route
 
 app.get("/api/health", (req, res) => {
-  res.json({ status: "OK", db: mongoose.connection.readyState === 1 ? "Connected" : "Disconnected" });
+  res.json({ 
+    status: "OK", 
+    db: mongoose.connection.readyState === 1 ? "Connected" : "Disconnected",
+    version: "1.0.1"
+  });
 });
 
 // Get all trails
@@ -97,6 +97,22 @@ app.delete("/api/trails/:id", async (req, res) => {
   }
 });
 
+// Debug route
+app.get("/api/debug", (req, res) => {
+  res.json({
+    nodeVersion: process.version,
+    env: process.env.NODE_ENV || "development",
+    mongoConnected: mongoose.connection.readyState === 1,
+    timestamp: new Date().toISOString()
+  });
+});
+
+// Error handling
+app.use((req, res) => {
+  res.status(404).json({ error: "Route not found" });
+});
+
+// Start server
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
