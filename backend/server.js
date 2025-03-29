@@ -20,6 +20,18 @@ app.use(cors({
   credentials: true
 }));
 
+// Basic root route
+app.get("/", (req, res) => {
+  res.json({
+    message: "TrailExplorer API is running",
+    availableEndpoints: [
+      "/api/health",
+      "/api/trails",
+      "/api/debug"
+    ]
+  });
+});
+
 // Database Connection
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("Connected to MongoDB Atlas"))
