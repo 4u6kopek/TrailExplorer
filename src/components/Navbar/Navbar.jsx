@@ -12,7 +12,6 @@ function Navbar() {
   const navigate = useNavigate();
 
   const handleClick = () => setClick(!click);
-
   const closeMobileMenu = () => setClick(false);
 
   const showButton = () => {
@@ -31,7 +30,6 @@ function Navbar() {
   useEffect(() => {
     showButton();
     window.addEventListener("resize", showButton);
-
     return () => {
       window.removeEventListener("resize", showButton);
     };
@@ -39,13 +37,8 @@ function Navbar() {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setUser(user);
-      } else {
-        setUser(null);
-      }
+      setUser(user);
     });
-
     return () => unsubscribe();
   }, []);
 
@@ -66,42 +59,41 @@ function Navbar() {
             </Link>
           </li>
           <li className="nav-item">
-            <Link
-              to="/adventures"
-              className="nav-links"
-              onClick={closeMobileMenu}
-            >
+            <Link to="/adventures" className="nav-links" onClick={closeMobileMenu}>
               Adventures
             </Link>
           </li>
+          
+          {/* Private Section - Only shows when user is logged in */}
+          {user && (
+            <>
+              <li className="nav-item">
+                <Link to="/create-trail" className="nav-links" onClick={closeMobileMenu}>
+                  New Trail
+                </Link>
+              </li>
+              <li className="nav-item">
+                <button className="nav-links" onClick={handleLogout}>
+                  Logout
+                </button>
+              </li>
+            </>
+          )}
+
+          {/* Public Section - Only shows when user is logged out */}
           {!user && (
             <>
               <li className="nav-item">
-                <Link
-                  to="/login"
-                  className="nav-links"
-                  onClick={closeMobileMenu}
-                >
+                <Link to="/login" className="nav-links" onClick={closeMobileMenu}>
                   Login
                 </Link>
               </li>
               <li className="nav-item">
-                <Link
-                  to="/register"
-                  className="nav-links-mobile"
-                  onClick={closeMobileMenu}
-                >
+                <Link to="/register" className="nav-links-mobile" onClick={closeMobileMenu}>
                   Register
                 </Link>
               </li>
             </>
-          )}
-          {user && (
-            <li className="nav-item">
-              <button className="nav-links" onClick={handleLogout}>
-                Logout
-              </button>
-            </li>
           )}
         </ul>
         {!user && button && (
