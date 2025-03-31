@@ -59,16 +59,16 @@
 }
 
 .difficulty-easy {
-  background-color: #4caf50;
+  background-color: #4CAF50;
 }
 
 .difficulty-moderate {
-  background-color: #ffc107;
+  background-color: #FFC107;
   color: #333;
 }
 
 .difficulty-hard {
-  background-color: #f44336;
+  background-color: #F44336;
 }
 
 .cards__item__info {
@@ -141,11 +141,11 @@
   .cards__item__info {
     padding: 1.25rem;
   }
-
+  
   .cards__item__title {
     font-size: 1.1rem;
   }
-
+  
   .cards__item__text {
     font-size: 0.9rem;
   }

@@ -34,7 +34,7 @@ const CardItem = memo(
             length,
             duration,
             likes,
-            image: src,
+            imageUrl: src,
           }}
           className="cards__item__link"
         >
