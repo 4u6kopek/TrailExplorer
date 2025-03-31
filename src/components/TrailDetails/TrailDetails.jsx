@@ -1,11 +1,11 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { 
-  FaMapMarkerAlt, 
-  FaRoute, 
-  FaClock, 
+import {
+  FaMapMarkerAlt,
+  FaRoute,
+  FaClock,
   FaHeart,
-  FaArrowLeft
+  FaArrowLeft,
 } from "react-icons/fa";
 import "./TrailDetails.css";
 
@@ -13,19 +13,18 @@ export default function TrailDetails() {
   const { state } = useLocation();
   const navigate = useNavigate();
 
-  // Add loading state to prevent flickering
-  const [isLoading, setIsLoading] = React.useState(true);
-
+  // Debug: Log the received state
   React.useEffect(() => {
-    if (state) {
-      setIsLoading(false);
-    } else {
-      navigate("/");
-    }
-  }, [state, navigate]);
+    console.log("Trail details state:", state);
+  }, [state]);
 
-  if (isLoading) {
-    return <div className="loading">Loading trail details...</div>;
+  if (!state) {
+    return (
+      <div className="error">
+        Trail data not found.{" "}
+        <button onClick={() => navigate("/")}>Return home</button>
+      </div>
+    );
   }
 
   return (
@@ -33,44 +32,30 @@ export default function TrailDetails() {
       <button onClick={() => navigate(-1)} className="back-button">
         <FaArrowLeft /> Back to Trails
       </button>
-      
+
       <div className="trail-content">
         <h2 className="trail-title">{state.title || "Unnamed Trail"}</h2>
-        
-        {state.image && (
-          <div className="trail-image">
-            <img 
-              src={state.image} 
-              alt={state.title}
-              onError={(e) => {
-                e.target.src = "/img-default.jpg";
-              }}
-            />
-          </div>
-        )}
 
-        <div className="trail-meta">
-          <span className="meta-item">
-            <FaMapMarkerAlt className="icon" /> {state.location || "Unknown location"}
-          </span>
-          <span className="meta-item">
-            <FaRoute className="icon" /> {state.length || "0 km"}
-          </span>
-          <span className="meta-item">
-            <FaClock className="icon" /> {state.duration || "0 hours"}
-          </span>
-          <span className="meta-item">
-            <FaHeart className="icon" /> {state.likes || 0}
-          </span>
-          {/* Single difficulty display */}
-          <span className={`difficulty-badge difficulty-${state.difficulty || "easy"}`}>
-            {state.difficulty?.toUpperCase() || "EASY"}
-          </span>
+        <div className="trail-image">
+          <img
+            src={state.imageUrl || "/images/img-1.jpg"}
+            alt={state.title}
+            onError={(e) => {
+              e.target.src = "/images/img-1.jpg";
+            }}
+          />
         </div>
+
+        <div className="trail-meta"></div>
 
         <div className="trail-description">
           <h3>Description</h3>
-          <p>{state.fullDescription || "No detailed description available"}</p>
+          <p>
+            {state.fullDescription ||
+              state.description ||
+              state.fullText ||
+              "No description available"}
+          </p>
         </div>
       </div>
     </div>
