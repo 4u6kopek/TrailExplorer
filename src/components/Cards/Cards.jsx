@@ -1,17 +1,13 @@
-import React from "react";
+import React, { memo } from "react";
 import "./Cards.css";
 import CardItem from "../CardItem/CardItem";
 
 const Cards = ({ trails }) => {
-  // First check if trails exists and is an array
   if (!trails || !Array.isArray(trails)) {
-    console.error("Invalid trails data:", trails);
     return (
       <div className="cards">
         <h1>Explore Trails</h1>
-        <div className="error-message">
-          Unable to load trails. Please try again later.
-        </div>
+        <div className="error-message">Unable to load trails.</div>
       </div>
     );
   }
@@ -24,8 +20,10 @@ const Cards = ({ trails }) => {
           {trails.length > 0 ? (
             <ul className="cards__items">
               {trails.map((trail) => {
-                // Safely access trail properties with defaults
-                const trailId = trail?._id?.$oid || trail?._id || Math.random();
+                const trailId =
+                  trail?._id?.$oid ||
+                  trail?._id ||
+                  `${trail.name}-${trail.location}`;
                 const description =
                   trail?.description || "No description available";
 
@@ -33,7 +31,7 @@ const Cards = ({ trails }) => {
                   <CardItem
                     key={trailId}
                     id={trailId}
-                    src={trail?.image || "/img-default.jpg"}
+                    src={trail?.image || "/images/img-1.jpg"}
                     title={trail?.name || "Unnamed Trail"}
                     text={
                       description.length > 100
@@ -51,7 +49,7 @@ const Cards = ({ trails }) => {
               })}
             </ul>
           ) : (
-            <p>No trails found. Be the first to create one!</p>
+            <p className="no-trails">No trails found.</p>
           )}
         </div>
       </div>
@@ -59,4 +57,4 @@ const Cards = ({ trails }) => {
   );
 };
 
-export default Cards;
+export default memo(Cards);
