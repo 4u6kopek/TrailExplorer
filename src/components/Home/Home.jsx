@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "../../App.css";
+import "./Home.css";
 import Cards from "../Cards/Cards";
 import HeroSection from "../HeroSection/HeroSection";
 import Footer from "../Footer/Footer";
@@ -14,7 +15,7 @@ function Home() {
       "https://trail-explorer-backend-git-main-bogomils-projects-951e1882.vercel.app/api/trails"
     )
       .then((res) => {
-        if (!res.ok) throw new Error("Failed to fetch");
+        if (!res.ok) throw new Error("Failed to fetch trails");
         return res.json();
       })
       .then((data) => {
@@ -27,13 +28,23 @@ function Home() {
       });
   }, []);
 
-  if (loading) return <div>Loading trails...</div>;
-  if (error) return <div>Error: {error}</div>;
-
   return (
     <>
       <HeroSection />
-      <Cards trails={trails} />
+
+      <div className="trails-container">
+        {loading && (
+          <div className="loading-overlay">
+            <div className="loading-spinner"></div>
+          </div>
+        )}
+        {error ? (
+          <div className="error-message">Error: {error}</div>
+        ) : (
+          <Cards trails={trails} />
+        )}
+      </div>
+
       <Footer />
     </>
   );
