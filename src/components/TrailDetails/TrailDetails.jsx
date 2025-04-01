@@ -13,11 +13,6 @@ export default function TrailDetails() {
   const { state } = useLocation();
   const navigate = useNavigate();
 
-  // Debug: Log the received state
-  React.useEffect(() => {
-    console.log("Trail details state:", state);
-  }, [state]);
-
   if (!state) {
     return (
       <div className="error">
@@ -40,9 +35,7 @@ export default function TrailDetails() {
           <img
             src={state.imageUrl || "/images/img-1.jpg"}
             alt={state.title}
-            onError={(e) => {
-              e.target.src = "/images/img-1.jpg";
-            }}
+            onError={(e) => (e.target.src = "/images/img-1.jpg")}
           />
         </div>
 
@@ -50,12 +43,7 @@ export default function TrailDetails() {
 
         <div className="trail-description">
           <h3>Description</h3>
-          <p>
-            {state.fullDescription ||
-              state.description ||
-              state.fullText ||
-              "No description available"}
-          </p>
+          <p>{state.description || "No description available"}</p>
         </div>
       </div>
     </div>

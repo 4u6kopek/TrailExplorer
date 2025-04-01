@@ -21,6 +21,11 @@ const Cards = ({ trails }) => {
             <ul className="cards__items">
               {trails.map((trail) => {
                 const trailId = trail?._id || `${trail.name}-${trail.location}`;
+                const shortDescription = trail?.description
+                  ? trail.description.length > 100
+                    ? `${trail.description.substring(0, 100)}...`
+                    : trail.description
+                  : "No description available";
 
                 return (
                   <CardItem
@@ -28,11 +33,8 @@ const Cards = ({ trails }) => {
                     id={trailId}
                     src={trail?.imageUrl || "/images/img-1.jpg"}
                     title={trail?.name || "Unnamed Trail"}
-                    text={trail?.briefDescription || "No description available"}
-                    fullText={
-                      trail?.fullDescription ||
-                      "No detailed description available"
-                    }
+                    text={shortDescription}
+                    fullText={trail?.description}
                     location={trail?.location || "Unknown location"}
                     difficulty={trail?.difficulty || "easy"}
                     length={`${trail?.length || 0} km`}

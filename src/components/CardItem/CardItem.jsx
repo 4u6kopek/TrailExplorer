@@ -9,7 +9,7 @@ const CardItem = memo(
     src,
     title = "Unnamed Trail",
     text = "No description available",
-    fullText = "No detailed description available",
+    fullText = "",
     location = "Unknown location",
     difficulty = "easy",
     length = "0 km",
@@ -28,7 +28,7 @@ const CardItem = memo(
           to={`/trail/${id}`}
           state={{
             title,
-            fullDescription: fullText,
+            description: fullText,
             location,
             difficulty,
             length,
