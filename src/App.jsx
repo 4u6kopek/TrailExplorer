@@ -2,6 +2,7 @@ import React from "react";
 import Navbar from "./components/Navbar/Navbar";
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { AuthProvider } from "./context/AuthContext";
 
 // Public routes
 import Home from "./components/Home/Home";
@@ -15,33 +16,36 @@ import TrailDetails from "./components/TrailDetails/TrailDetails";
 
 function App() {
   return (
-    <Router>
-      <Navbar />
-      <Routes>
-        {/* Public Routes */}
-        <Route path="/" element={<Home />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
+    <AuthProvider>
+      {" "}
+      <Router>
+        <Navbar />
+        <Routes>
+          {/* Public Routes */}
+          <Route path="/" element={<Home />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
 
-        {/* Private Routes */}
-        <Route
-          path="/create-trail"
-          element={
-            <PrivateRoute>
-              <CreateTrail />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/trail/:id"
-          element={
-            <PrivateRoute>
-              <TrailDetails />
-            </PrivateRoute>
-          }
-        />
-      </Routes>
-    </Router>
+          {/* Private Routes */}
+          <Route
+            path="/create-trail"
+            element={
+              <PrivateRoute>
+                <CreateTrail />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/trail/:id"
+            element={
+              <PrivateRoute>
+                <TrailDetails />
+              </PrivateRoute>
+            }
+          />
+        </Routes>
+      </Router>
+    </AuthProvider>
   );
 }
 
