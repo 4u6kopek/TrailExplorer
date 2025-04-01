@@ -39,11 +39,36 @@ export default function TrailDetails() {
           />
         </div>
 
-        <div className="trail-meta"></div>
+        <div className="trail-meta">
+          <div className="meta-item">
+            <FaMapMarkerAlt className="icon" />{" "}
+            {state.location || "Unknown location"}
+          </div>
+          <div className="meta-item">
+            <FaRoute className="icon" /> {state.length || 0} km
+          </div>
+          <div className="meta-item">
+            <FaClock className="icon" /> {state.duration || 0} hours
+          </div>
+          <div className="meta-item">
+            <span
+              className={`difficulty-badge difficulty-${
+                state.difficulty || "easy"
+              }`}
+            >
+              {(state.difficulty || "easy").toUpperCase()}
+            </span>
+          </div>
+          <div className="meta-item">
+            <FaHeart className="icon" /> {state.likes || 0} likes
+          </div>
+        </div>
 
         <div className="trail-description">
           <h3>Description</h3>
-          <p>{state.description || "No description available"}</p>
+          <p>
+            {state.description || state.fullText || "No description available"}
+          </p>
         </div>
       </div>
     </div>
