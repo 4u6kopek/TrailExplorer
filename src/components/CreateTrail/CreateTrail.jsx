@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { auth } from "../../services/firebase";
 import { useNavigate } from "react-router-dom";
-import "./CreateTrail.css"; // New styling file
+import { useAuth } from "../../context/AuthContext";
+import "./CreateTrail.css";
 
 export default function CreateTrail() {
   const [formData, setFormData] = useState({
@@ -11,11 +11,12 @@ export default function CreateTrail() {
     difficulty: "easy",
     length: "",
     duration: "",
-    image: "/img-default.jpg", // Default image
+    image: "/img-default.jpg",
   });
   const [error, setError] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
+  const { currentUser } = useAuth();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -27,24 +28,26 @@ export default function CreateTrail() {
     setIsSubmitting(true);
     setError(null);
 
-    const user = auth.currentUser;
-    if (!user) {
+    if (!currentUser) {
       setError("Please log in first!");
       setIsSubmitting(false);
       return;
     }
 
     try {
-      const response = await fetch("https://your-api-url/api/trails", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...formData,
-          userId: user.uid,
-          likes: 0,
-          createdAt: new Date().toISOString(),
-        }),
-      });
+      const response = await fetch(
+        "https://trail-explorer-backend-git-main-bogomils-projects-951e1882.vercel.app/api/trails",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            ...formData,
+            userId: currentUser.uid,
+            likes: 0,
+            createdAt: new Date().toISOString(),
+          }),
+        }
+      );
 
       if (!response.ok) throw new Error(await response.text());
       navigate("/", { state: { success: "Trail created successfully!" } });

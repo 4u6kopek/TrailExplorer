@@ -4,11 +4,13 @@ import "./Home.css";
 import Cards from "../Cards/Cards";
 import HeroSection from "../HeroSection/HeroSection";
 import Footer from "../Footer/Footer";
+import { useAuth } from "../../context/AuthContext";
 
 function Home() {
   const [trails, setTrails] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { loading: authLoading } = useAuth();
 
   useEffect(() => {
     fetch(
@@ -28,23 +30,30 @@ function Home() {
       });
   }, []);
 
+  console.log("Fetched trails:", trails); // Don't forget to remove!!
+
+  if (authLoading) {
+    return (
+      <div className="loading-overlay">
+        <div className="loading-spinner"></div>
+      </div>
+    );
+  }
+
   return (
     <>
       <HeroSection />
-
       <div className="trails-container">
-        {loading && (
+        {loading ? (
           <div className="loading-overlay">
             <div className="loading-spinner"></div>
           </div>
-        )}
-        {error ? (
+        ) : error ? (
           <div className="error-message">Error: {error}</div>
         ) : (
           <Cards trails={trails} />
         )}
       </div>
-
       <Footer />
     </>
   );
