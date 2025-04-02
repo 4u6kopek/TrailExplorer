@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
-import "./EditTrail.css"; // You can reuse CreateTrail.css
+import "./EditTrail.css";
 
 export default function EditTrail() {
   const { state: locationState } = useLocation();
@@ -15,7 +15,7 @@ export default function EditTrail() {
     difficulty: "easy",
     length: "",
     duration: "",
-    imageUrl: "",
+    image: "/img-default.jpg",
   });
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -29,7 +29,8 @@ export default function EditTrail() {
         difficulty: locationState.difficulty || "easy",
         length: locationState.length || "",
         duration: locationState.duration || "",
-        imageUrl: locationState.imageUrl || "/images/img-1.jpg",
+        image:
+          locationState.imageUrl || locationState.image || "/img-default.jpg",
       });
     }
   }, [locationState]);
@@ -155,8 +156,8 @@ export default function EditTrail() {
         <div className="form-group">
           <label>Image URL</label>
           <input
-            name="imageUrl"
-            value={formData.imageUrl}
+            name="image"
+            value={formData.image}
             onChange={handleChange}
             disabled={isSubmitting}
           />
