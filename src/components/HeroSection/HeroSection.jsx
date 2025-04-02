@@ -4,6 +4,14 @@ import Button from "../Button/Button";
 import "./HeroSection.css";
 
 function HeroSection() {
+  const scrollToTrails = () => {
+    const trailsSection = document.querySelector(".trails-container");
+    trailsSection.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  };
+
   return (
     <div className="hero-container">
       <video src="/videos/video-1.mp4" autoPlay loop muted />
@@ -14,6 +22,7 @@ function HeroSection() {
           className="btns"
           buttonStyle="btn--outline"
           buttonSize="btn--large"
+          onClick={scrollToTrails}
         >
           GET STARTED
         </Button>
@@ -22,7 +31,7 @@ function HeroSection() {
           buttonStyle="btn--primary"
           buttonSize="btn--large"
         >
-          WATCH TRAILER <i className="far fa-play-circle" />
+          VIEW DEMO <i className="far fa-play-circle" />
         </Button>
       </div>
     </div>
