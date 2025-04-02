@@ -10,13 +10,17 @@ function Register() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleRegister = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setError("");
 
     if (!name || !email || !password || !confirmPassword) {
       setError("All fields are required.");
+      setLoading(false);
       return;
     }
 
@@ -24,23 +28,51 @@ function Register() {
       setError("Passwords do not match.");
       setPassword("");
       setConfirmPassword("");
+      setLoading(false);
       return;
     }
 
     if (password.length < 6) {
       setError("Password must be at least 6 characters long.");
-      setPassword("");
-      setConfirmPassword("");
+      setLoading(false);
       return;
     }
 
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
-      navigate("/");
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+      const response = await fetch(
+        "https://trail-explorer-backend-git-main-bogomils-projects-951e1882.vercel.app/api/users",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            _id: userCredential.user.uid,
+            username: name,
+            email: email,
+            avatarUrl: `https://ui-avatars.com/api/?name=${encodeURIComponent(
+              name
+            )}&background=random`,
+            trailsCount: 0,
+            savedTrails: [],
+            createdAt: new Date().toISOString(),
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(await response.text());
+      }
+
+      navigate("/profile");
     } catch (err) {
-      setError(err.message);
-      setPassword("");
-      setConfirmPassword("");
+      setError(err.message.split("Firebase:")[1] || "Registration failed");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -71,10 +103,11 @@ function Register() {
           <div className="input-group">
             <input
               type="password"
-              placeholder="Password"
+              placeholder="Password (min 6 characters)"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
+              minLength={6}
             />
           </div>
           <div className="input-group">
@@ -84,9 +117,12 @@ function Register() {
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
+              minLength={6}
             />
           </div>
-          <button type="submit">Register</button>
+          <button type="submit" disabled={loading}>
+            {loading ? "Creating account..." : "Register"}
+          </button>
         </form>
         <p className="login-link">
           Already have an account? <Link to="/login">Login here</Link>.
