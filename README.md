@@ -99,6 +99,18 @@
 
 ---
 
+🔐 Testing Access
+For quick exploration, use this test account:
+
+**Email**: test.trailexplorer@gmail.com  
+**Password**: TrailExplorer2025!
+
+⚠️ Important Notes
+
+Do not use real personal data in this account.
+
+---
+
 ## 💻 **Local Setup**
 
 1. Clone repos:
