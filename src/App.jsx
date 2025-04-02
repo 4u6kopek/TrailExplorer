@@ -14,7 +14,8 @@ import CreateTrail from "./components/CreateTrail/CreateTrail";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import PublicRoute from "./components/PublicRoute/PublicRoute";
 import TrailDetails from "./components/TrailDetails/TrailDetails";
-import Profile from "./components/Profile/Profile"; 
+import Profile from "./components/Profile/Profile";
+import EditTrail from "./components/EditTrail/EditTrail";
 
 function App() {
   return (
@@ -63,6 +64,14 @@ function App() {
             element={
               <PrivateRoute>
                 <Profile />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/edit-trail/:id"
+            element={
+              <PrivateRoute>
+                <EditTrail />
               </PrivateRoute>
             }
           />
