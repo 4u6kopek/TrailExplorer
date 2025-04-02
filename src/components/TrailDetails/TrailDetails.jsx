@@ -127,20 +127,13 @@ export default function TrailDetails() {
               {state.location || "Unknown location"}
             </div>
             <div className="meta-item">
-              <FaRoute className="icon" /> {state.length || 0} km
+              <FaRoute className="icon" /> {state.length || 0}
             </div>
             <div className="meta-item">
               <FaClock className="icon" /> {state.duration || 0} hours
             </div>
             <div className="meta-item">
-              <SaveButton
-                trailId={state.id}
-                initialLikes={state.likes || 0}
-                initialSaved={
-                  state.savedBy?.includes(currentUser?.uid) || false
-                }
-                
-              />
+              <SaveButton trailId={state.id} initialLikes={state.likes || 0} />
             </div>
 
             {isOwner && (

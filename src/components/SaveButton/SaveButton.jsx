@@ -4,7 +4,7 @@ import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import "./SaveButton.css";
 
-const SaveButton = ({ trailId, initialLikes, initialSaved, currentUser }) => {
+const SaveButton = ({ trailId, initialLikes, initialSaved }) => {
   const { currentUser } = useAuth();
   const navigate = useNavigate();
   const [isSaved, setIsSaved] = useState(initialSaved);
