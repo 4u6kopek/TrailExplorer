@@ -40,6 +40,7 @@ const Cards = ({ trails }) => {
                     length={`${trail?.length || 0} km`}
                     duration={`${trail?.duration || 0} hours`}
                     likes={trail?.likes || 0}
+                    userId={trail?.userId}
                   />
                 );
               })}
