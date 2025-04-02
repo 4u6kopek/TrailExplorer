@@ -71,11 +71,7 @@ const CardItem = memo(
                 <FaClock className="icon" /> {duration}
               </span>
               <span className="cards__item__stat">
-                <SaveButton
-                  trailId={id}
-                  initialLikes={likes}
-                  initialSaved={savedBy.includes(currentUser?.uid)}
-                />
+                <SaveButton trailId={id} initialLikes={likes} />
               </span>
             </div>
           </div>
