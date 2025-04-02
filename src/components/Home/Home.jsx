@@ -5,6 +5,7 @@ import Cards from "../Cards/Cards";
 import HeroSection from "../HeroSection/HeroSection";
 import Footer from "../Footer/Footer";
 import { useAuth } from "../../context/AuthContext";
+import { Link } from "react-router-dom";
 
 function Home() {
   const [trails, setTrails] = useState([]);
@@ -21,7 +22,7 @@ function Home() {
         return res.json();
       })
       .then((data) => {
-        setTrails(data);
+        setTrails(data.slice(0, 6));
         setLoading(false);
       })
       .catch((err) => {
@@ -49,7 +50,14 @@ function Home() {
         ) : error ? (
           <div className="error-message">Error: {error}</div>
         ) : (
-          <Cards trails={trails} />
+          <>
+            <Cards trails={trails} />
+            <div className="view-all-container">
+              <Link to="/adventures" className="view-all-button">
+                View All Adventures →
+              </Link>
+            </div>
+          </>
         )}
       </div>
       <Footer />
