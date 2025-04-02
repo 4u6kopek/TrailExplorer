@@ -30,8 +30,6 @@ function Home() {
       });
   }, []);
 
-  console.log("Fetched trails:", trails); // Don't forget to remove!!
-
   if (authLoading) {
     return (
       <div className="loading-overlay">

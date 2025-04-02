@@ -226,6 +226,21 @@
   margin: 2rem 0;
 }
 
+.meta-item .save-button {
+  padding: 8px 16px;
+  font-size: 1rem;
+  font-family: inherit;
+}
+
+.meta-item .save-button .icon {
+  font-size: 1.2em;
+}
+
+.meta-item,
+.cards__item__stat {
+  font-family: inherit;
+  font-weight: normal;
+}
 @media (max-width: 768px) {
   .trail-header {
     flex-direction: column;

@@ -1,6 +1,7 @@
 import React, { memo } from "react";
 import { Link } from "react-router-dom";
-import { FaMapMarkerAlt, FaRoute, FaClock, FaHeart } from "react-icons/fa";
+import { FaMapMarkerAlt, FaRoute, FaClock } from "react-icons/fa";
+import SaveButton from "../SaveButton/SaveButton";
 import "./CardItem.css";
 
 const CardItem = memo(
@@ -16,6 +17,7 @@ const CardItem = memo(
     duration = "0 hours",
     likes = 0,
     userId = "",
+    savedBy = [],
   }) => {
     const handleImageError = (e) => {
       if (e.target.src !== "/images/img-1.jpg") {
@@ -38,6 +40,7 @@ const CardItem = memo(
             likes,
             imageUrl: src,
             userId,
+            savedBy,
           }}
           className="cards__item__link"
         >
@@ -61,13 +64,18 @@ const CardItem = memo(
             <p className="cards__item__text">{text}</p>
             <div className="cards__item__stats">
               <span className="cards__item__stat">
-                <FaRoute className="icon" /> {length}
+                <FaRoute className="icon" />{" "}
+                {length.includes("km") ? length : `${length} km`}
               </span>
               <span className="cards__item__stat">
                 <FaClock className="icon" /> {duration}
               </span>
               <span className="cards__item__stat">
-                <FaHeart className="icon" /> {likes}
+                <SaveButton
+                  trailId={id}
+                  initialLikes={likes}
+                  initialSaved={savedBy.includes(currentUser?.uid)}
+                />
               </span>
             </div>
           </div>

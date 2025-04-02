@@ -11,6 +11,7 @@ import {
 } from "react-icons/fa";
 import { useAuth } from "../../context/AuthContext";
 import "./TrailDetails.css";
+import SaveButton from "../SaveButton/SaveButton";
 
 const difficultyColors = {
   easy: {
@@ -39,10 +40,6 @@ export default function TrailDetails() {
 
   const currentDifficulty = state?.difficulty || "easy";
   const colors = difficultyColors[currentDifficulty] || difficultyColors.easy;
-
-  console.log("Current User ID:", currentUser?.uid);
-  console.log("Trail User ID:", state?.userId);
-  console.log("Is Owner:", currentUser?.uid === state?.userId);
 
   const handleDelete = async () => {
     if (!window.confirm("Are you sure you want to delete this trail?")) return;
@@ -136,7 +133,14 @@ export default function TrailDetails() {
               <FaClock className="icon" /> {state.duration || 0} hours
             </div>
             <div className="meta-item">
-              <FaHeart className="icon" /> {state.likes || 0} likes
+              <SaveButton
+                trailId={state.id}
+                initialLikes={state.likes || 0}
+                initialSaved={
+                  state.savedBy?.includes(currentUser?.uid) || false
+                }
+                
+              />
             </div>
 
             {isOwner && (

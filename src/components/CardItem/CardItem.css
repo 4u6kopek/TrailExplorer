@@ -59,16 +59,16 @@
 }
 
 .difficulty-easy {
-  background-color: #4CAF50;
+  background-color: #4caf50;
 }
 
 .difficulty-moderate {
-  background-color: #FFC107;
+  background-color: #ffc107;
   color: #333;
 }
 
 .difficulty-hard {
-  background-color: #F44336;
+  background-color: #f44336;
 }
 
 .cards__item__info {
@@ -137,15 +137,28 @@
   background: #f5f5f5;
 }
 
+.cards__item__stat.save-button {
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cards__item__stat.save-button:hover {
+  color: #f44336;
+}
+
+.cards__item__stat .icon.saved {
+  color: #f44336;
+}
+
 @media (max-width: 480px) {
   .cards__item__info {
     padding: 1.25rem;
   }
-  
+
   .cards__item__title {
     font-size: 1.1rem;
   }
-  
+
   .cards__item__text {
     font-size: 0.9rem;
   }
