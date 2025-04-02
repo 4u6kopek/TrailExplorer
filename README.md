@@ -99,7 +99,7 @@
 
 ---
 
-🔐 Testing Access
+## 🔐 **Testing Access** 
 For quick exploration, use this test account:
 
 **Email**: test.trailexplorer@gmail.com  
