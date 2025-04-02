@@ -1,12 +1,15 @@
-import React from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { useLocation, useNavigate, Link } from "react-router-dom";
 import {
   FaMapMarkerAlt,
   FaRoute,
   FaClock,
   FaHeart,
   FaArrowLeft,
+  FaEdit,
+  FaTrash,
 } from "react-icons/fa";
+import { useAuth } from "../../context/AuthContext";
 import "./TrailDetails.css";
 
 const difficultyColors = {
@@ -30,9 +33,44 @@ const difficultyColors = {
 export default function TrailDetails() {
   const { state } = useLocation();
   const navigate = useNavigate();
+  const { currentUser } = useAuth();
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [error, setError] = useState("");
 
   const currentDifficulty = state?.difficulty || "easy";
   const colors = difficultyColors[currentDifficulty] || difficultyColors.easy;
+
+  console.log("Current User ID:", currentUser?.uid);
+  console.log("Trail User ID:", state?.userId);
+  console.log("Is Owner:", currentUser?.uid === state?.userId);
+
+  const handleDelete = async () => {
+    if (!window.confirm("Are you sure you want to delete this trail?")) return;
+
+    if (!state.id || !currentUser?.uid) {
+      setError("Missing trail ID or user ID");
+      return;
+    }
+
+    setIsDeleting(true);
+    setError("");
+
+    try {
+      const response = await fetch(
+        `https://trail-explorer-backend-git-main-bogomils-projects-951e1882.vercel.app/api/trails?id=${encodeURIComponent(
+          state.id
+        )}&userId=${encodeURIComponent(currentUser.uid)}`,
+        { method: "DELETE" }
+      );
+
+      if (!response.ok) throw new Error("Failed to delete trail");
+      navigate("/", { state: { message: "Trail deleted successfully!" } });
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setIsDeleting(false);
+    }
+  };
 
   if (!state) {
     return (
@@ -42,6 +80,8 @@ export default function TrailDetails() {
       </div>
     );
   }
+
+  const isOwner = currentUser?.uid === state.userId;
 
   return (
     <div
@@ -73,6 +113,8 @@ export default function TrailDetails() {
             </span>
           </div>
 
+          {error && <div className="error-message">{error}</div>}
+
           <div className="trail-image-container">
             <img
               src={state.imageUrl}
@@ -96,6 +138,25 @@ export default function TrailDetails() {
             <div className="meta-item">
               <FaHeart className="icon" /> {state.likes || 0} likes
             </div>
+
+            {isOwner && (
+              <div className="meta-actions">
+                <Link
+                  to={`/edit-trail/${state.id}`}
+                  state={state}
+                  className="edit-button"
+                >
+                  <FaEdit /> Edit
+                </Link>
+                <button
+                  onClick={handleDelete}
+                  disabled={isDeleting}
+                  className="delete-button"
+                >
+                  <FaTrash /> {isDeleting ? "Deleting..." : "Delete"}
+                </button>
+              </div>
+            )}
           </div>
 
           <div className="trail-description">
