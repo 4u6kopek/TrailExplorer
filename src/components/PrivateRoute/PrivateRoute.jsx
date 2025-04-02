@@ -1,24 +1,17 @@
-import { useEffect, useState } from "react";
-import { Navigate } from "react-router-dom";
-import { auth } from "../../services/firebase";
-import { onAuthStateChanged } from "firebase/auth";
+import { useAuth } from "../../context/AuthContext";
+import { Navigate, useLocation } from "react-router-dom";
 
 export default function PrivateRoute({ children }) {
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user);
-      setLoading(false);
-    });
-
-    return () => unsubscribe();
-  }, []);
+  const { currentUser, loading } = useAuth();
+  const location = useLocation();
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div className="loading-spinner">Loading...</div>;
   }
 
-  return user ? children : <Navigate to="/login" replace />;
+  return currentUser ? (
+    children
+  ) : (
+    <Navigate to="/login" state={{ from: location }} replace />
+  );
 }
