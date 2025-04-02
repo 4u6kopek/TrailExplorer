@@ -90,14 +90,6 @@
 
 ---
 
-## 📸 **Screenshots**
-
-```markdown
-![Home Page](/images/HomePage.png?raw=true)
-```
-
----
-
 ## 🚧 **Future Roadmap**
 
 - [ ] **Google Maps integration** for trail locations
