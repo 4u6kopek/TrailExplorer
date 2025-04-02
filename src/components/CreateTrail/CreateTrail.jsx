@@ -50,7 +50,7 @@ export default function CreateTrail() {
       );
 
       if (!response.ok) throw new Error(await response.text());
-      navigate("/", { state: { success: "Trail created successfully!" } });
+      navigate("/profile", { state: { success: "Trail created successfully!" } });
     } catch (err) {
       setError(err.message || "Failed to create trail");
     } finally {

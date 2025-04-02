@@ -59,8 +59,8 @@ export default function EditTrail() {
       );
 
       if (!response.ok) throw new Error(await response.text());
-      navigate(`/trail/${id}`, {
-        state: { message: "Trail updated successfully!" },
+      navigate("/profile", {
+        state: { success: "Trail updated successfully!" },
       });
     } catch (err) {
       setError(err.message || "Failed to update trail");
