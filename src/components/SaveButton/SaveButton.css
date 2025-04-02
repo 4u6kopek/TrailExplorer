@@ -1,0 +1,37 @@
+.save-button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(76, 175, 80, 0.1);
+  border: 1px solid #4caf50;
+  cursor: pointer;
+  padding: 6px 12px;
+  border-radius: 20px;
+  transition: all 0.2s ease;
+  color: #252e48;
+  font-family: inherit;
+}
+
+.save-button:hover {
+  background: rgba(76, 175, 80, 0.2);
+}
+
+.save-button .icon {
+  font-size: 1.1em;
+  color: #f44336;
+  transition: all 0.2s ease;
+}
+
+.save-button .icon.saved {
+  color: #f44336;
+}
+
+.save-button:not(.saved) .icon {
+  opacity: 0.7;
+}
+
+.likes-count {
+  font-size: 0.9em;
+  font-weight: normal;
+  color: inherit;
+}
