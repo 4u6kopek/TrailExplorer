@@ -15,6 +15,7 @@ const CardItem = memo(
     length = "0 km",
     duration = "0 hours",
     likes = 0,
+    userId = "",
   }) => {
     const handleImageError = (e) => {
       if (e.target.src !== "/images/img-1.jpg") {
@@ -27,6 +28,7 @@ const CardItem = memo(
         <Link
           to={`/trail/${id}`}
           state={{
+            id,
             title,
             description: fullText,
             location,
@@ -35,6 +37,7 @@ const CardItem = memo(
             duration,
             likes,
             imageUrl: src,
+            userId,
           }}
           className="cards__item__link"
         >
