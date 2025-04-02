@@ -12,21 +12,36 @@ import Login from "./components/Login/Login";
 // Private routes
 import CreateTrail from "./components/CreateTrail/CreateTrail";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
+import PublicRoute from "./components/PublicRoute/PublicRoute";
 import TrailDetails from "./components/TrailDetails/TrailDetails";
+import Profile from "./components/Profile/Profile"; 
 
 function App() {
   return (
     <AuthProvider>
-      {" "}
       <Router>
         <Navbar />
         <Routes>
           {/* Public Routes */}
           <Route path="/" element={<Home />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
 
-          {/* Private Routes */}
+          <Route
+            path="/register"
+            element={
+              <PublicRoute>
+                <Register />
+              </PublicRoute>
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              <PublicRoute>
+                <Login />
+              </PublicRoute>
+            }
+          />
+
           <Route
             path="/create-trail"
             element={
@@ -40,6 +55,14 @@ function App() {
             element={
               <PrivateRoute>
                 <TrailDetails />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <PrivateRoute>
+                <Profile />
               </PrivateRoute>
             }
           />
